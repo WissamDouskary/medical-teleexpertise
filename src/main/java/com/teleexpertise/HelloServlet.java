@@ -1,4 +1,4 @@
-package com.teleexpertise.medicalteleexpertise;
+package com.teleexpertise;
 
 import java.io.*;
 
