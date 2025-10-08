@@ -1,6 +1,5 @@
 package com.teleexpertise.util;
 
-
 import org.mindrot.jbcrypt.BCrypt;
 
 public class passwordUtil {
