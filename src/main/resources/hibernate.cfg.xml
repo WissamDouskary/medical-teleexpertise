@@ -26,5 +26,6 @@
         <mapping class="com.teleexpertise.model.MedecinSpecialiste"/>
         <mapping class="com.teleexpertise.model.SigneVital"/>
         <mapping class="com.teleexpertise.model.User"/>
+        <mapping class="com.teleexpertise.model.FileAttente"/>
     </session-factory>
 </hibernate-configuration>

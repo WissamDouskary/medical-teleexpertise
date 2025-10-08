@@ -59,10 +59,13 @@
     <div class="mb-8">
         <h1 class="text-3xl font-bold text-gray-900 mb-2">Ajouter un Nouveau Patient</h1>
         <p class="text-gray-600">Remplissez les informations du patient et ses signes vitaux</p>
+        <c:if test="${not empty sessionScope.sucess}">
+            <p class="text-green-600 font-bold">${sessionScope.sucess}</p>
+            <c:remove var="sucess" scope="session"/>
+        </c:if>
     </div>
 
     <form action="${pageContext.request.contextPath}/addPatient" method="post" class="space-y-8">
-        Patient Information Section
         <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 md:p-8">
             <div class="flex items-center gap-3 mb-6">
                 <div class="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center">

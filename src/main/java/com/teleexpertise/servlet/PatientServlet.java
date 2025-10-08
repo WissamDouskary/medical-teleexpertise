@@ -35,10 +35,15 @@ public class PatientServlet extends HttpServlet {
             double taille = Double.parseDouble(req.getParameter("taille"));
 
             Patient patient = PatientService.savePatient(nom, prenom, dateNaissance, numSecuriteSociale, adresse, telephone);
-            SigneVitalService.saveSignVital(tensionArterielle, frequenceCardiaque, temperature, frequenceRespiratoire, poids, taille, patient);
+            boolean isInserted = SigneVitalService.saveSignVital(tensionArterielle, frequenceCardiaque, temperature, frequenceRespiratoire, poids, taille, patient);
 
-            req.setAttribute("sucess", "Patient ajouter avec succes!");
-            resp.sendRedirect("addPatient.jsp");
+            if (isInserted) {
+                req.getSession().setAttribute("sucess", "Patient ajouté avec succès!");
+                resp.sendRedirect("addPatient.jsp");
+            }else{
+                req.getSession().setAttribute("error", "Error en patient ajouter avec succes!");
+                req.getRequestDispatcher("addPatient.jsp");
+            }
 
         } catch (Exception e) {
             throw new RuntimeException(e);
