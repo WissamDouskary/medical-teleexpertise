@@ -111,4 +111,19 @@ public class Patient {
     public void setConsultations(List<Consultation> consultations) {
         this.consultations = consultations;
     }
+
+    @Override
+    public String toString() {
+        return "Patient {" +
+                "id=" + id +
+                ", nom='" + nom + '\'' +
+                ", prenom='" + prenom + '\'' +
+                ", dateNaissance=" + dateNaissance +
+                ", numSecuriteSociale='" + numSecuriteSociale + '\'' +
+                ", adresse='" + adresse + '\'' +
+                ", telephone='" + telephone + '\'' +
+                ", nombreSignesVitaux=" + (signesVitaux != null ? signesVitaux.size() : 0) +
+                ", nombreConsultations=" + (consultations != null ? consultations.size() : 0) +
+                '}';
+    }
 }

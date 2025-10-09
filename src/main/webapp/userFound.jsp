@@ -1,16 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
-<%
-    if (session.getAttribute("user") == null)
-        response.sendRedirect("login.jsp");
-%>
-
-<!DOCTYPE html>
-<html lang="fr">
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ajouter un Patient - Téléexpertise Médicale</title>
+    <title>Utilisateur déja trouvé</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -34,7 +26,7 @@
         }
     </style>
 </head>
-<body class="bg-gray-50">
+<body>
 <nav class="bg-white shadow-sm border-b border-gray-200">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between items-center h-16">
@@ -55,26 +47,8 @@
         </div>
     </div>
 </nav>
-
 <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-    <div class="flex justify-between">
-        <div class="mb-8">
-            <h1 class="text-3xl font-bold text-gray-900 mb-2">Ajouter un Nouveau Patient</h1>
-            <p class="text-gray-600">Remplissez les informations du patient et ses signes vitaux</p>
-            <c:if test="${not empty sessionScope.sucess}">
-                <p class="text-green-600 font-bold">${sessionScope.sucess}</p>
-                <c:remove var="sucess" scope="session"/>
-            </c:if>
-        </div>
-        <div class="mb-8">
-            <a href="userFound.jsp"
-               class="text-sm font-medium text-white bg-primary hover:bg-opacity-90 transition-all px-5 py-2.5 rounded-lg">
-                Utilisateur deja enregistrer
-            </a>
-        </div>
-    </div>
-
-    <form action="${pageContext.request.contextPath}/addPatient" method="post" class="space-y-8">
+    <form action="${pageContext.request.contextPath}/searchPatient" method="post" class="space-y-8">
         <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 md:p-8">
             <div class="flex items-center gap-3 mb-6">
                 <div class="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center">
@@ -88,47 +62,6 @@
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                    <label for="nom" class="block text-sm font-medium text-gray-700 mb-2">
-                        Nom <span class="text-red-500">*</span>
-                    </label>
-                    <input
-                            type="text"
-                            id="nom"
-                            name="nom"
-                            required
-                            class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-colors"
-                            placeholder="Dupont"
-                    >
-                </div>
-
-                <div>
-                    <label for="prenom" class="block text-sm font-medium text-gray-700 mb-2">
-                        Prénom <span class="text-red-500">*</span>
-                    </label>
-                    <input
-                            type="text"
-                            id="prenom"
-                            name="prenom"
-                            required
-                            class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-colors"
-                            placeholder="Jean"
-                    >
-                </div>
-
-                <div>
-                    <label for="dateNaissance" class="block text-sm font-medium text-gray-700 mb-2">
-                        Date de Naissance <span class="text-red-500">*</span>
-                    </label>
-                    <input
-                            type="date"
-                            id="dateNaissance"
-                            name="dateNaissance"
-                            required
-                            class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-colors"
-                    >
-                </div>
-
-                <div>
                     <label for="numSecuriteSociale" class="block text-sm font-medium text-gray-700 mb-2">
                         N° Sécurité Sociale <span class="text-red-500">*</span>
                     </label>
@@ -141,38 +74,44 @@
                             placeholder="123456789012345"
                     >
                 </div>
-
-                <div>
-                    <label for="telephone" class="block text-sm font-medium text-gray-700 mb-2">
-                        Téléphone <span class="text-red-500">*</span>
-                    </label>
-                    <input
-                            type="tel"
-                            id="telephone"
-                            name="telephone"
-                            required
-                            class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-colors"
-                            placeholder="06 12 34 56 78"
-                    >
-                </div>
-
-                <div class="md:col-span-2">
-                    <label for="adresse" class="block text-sm font-medium text-gray-700 mb-2">
-                        Adresse <span class="text-red-500">*</span>
-                    </label>
-                    <textarea
-                            id="adresse"
-                            name="adresse"
-                            required
-                            rows="3"
-                            class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-colors resize-none"
-                            placeholder="123 Rue de la Santé, 75014 Paris"
-                    ></textarea>
-                </div>
             </div>
-        </div>
+            <div class="flex flex-col sm:flex-row gap-4 justify-end mt-4">
+                <button
+                        type="submit"
+                        class="px-6 py-3 bg-primary text-white rounded-lg font-medium hover:bg-secondary transition-colors shadow-sm"
+                >
+                    Rechercher
+                </button>
+            </div>
+            <c:if test="${not empty succes}">
+                <p class="text-green-500">${succes}</p>
+            </c:if>
 
-        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 md:p-8">
+            <c:if test="${not empty requestScope.sucess}">
+                <p class="text-green-500">${requestScope.sucess}</p>
+            </c:if>
+
+
+            <c:if test="${requestScope.isFound == true}">
+                <h3 class="text-lg font-semibold text-gray-700 mb-2">Patient details:</h3>
+                <ul class="text-gray-600">
+                    <li><strong>Nom:</strong> ${patient.nom}</li>
+                    <li><strong>Prénom:</strong> ${patient.prenom}</li>
+                    <li><strong>Date de naissance:</strong> ${patient.dateNaissance}</li>
+                    <li><strong>Adresse:</strong> ${patient.adresse}</li>
+                    <li><strong>Téléphone:</strong> ${patient.telephone}</li>
+                    <li><strong>Numéro Sécu:</strong> ${patient.numSecuriteSociale}</li>
+                </ul>
+            </c:if>
+
+            <c:if test="${requestScope.isFound == false}">
+                <p class="text-red-500 font-medium mt-4">${error}</p>
+            </c:if>
+        </div>
+    </form>
+
+    <c:if test="${requestScope.isFound == true}">
+        <form action="${pageContext.request.contextPath}/updateSignes" method="post" class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 md:p-8">
             <div class="flex items-center gap-3 mb-6">
                 <div class="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center">
                     <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -182,7 +121,7 @@
                 </div>
                 <h2 class="text-xl font-semibold text-gray-900">Signes Vitaux</h2>
             </div>
-
+            <input type="hidden" value="${patient.id}" name="patient_id"/>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                     <label for="tensionArterielle" class="block text-sm font-medium text-gray-700 mb-2">
@@ -192,6 +131,7 @@
                             type="number"
                             id="tensionArterielle"
                             name="tensionArterielle"
+                            value="${signVitaux.tensionArterielle}"
                             required
                             step="0.1"
                             min="0"
@@ -208,6 +148,7 @@
                             type="number"
                             id="frequenceCardiaque"
                             name="frequenceCardiaque"
+                            value="${signVitaux.frequenceCardiaque}"
                             required
                             min="0"
                             class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-colors"
@@ -223,6 +164,7 @@
                             type="number"
                             id="temperature"
                             name="temperature"
+                            value="${signVitaux.temperature}"
                             required
                             step="0.1"
                             min="0"
@@ -239,6 +181,7 @@
                             type="number"
                             id="frequenceRespiratoire"
                             name="frequenceRespiratoire"
+                            value="${signVitaux.frequenceRespiratoire}"
                             required
                             min="0"
                             class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-colors"
@@ -254,6 +197,7 @@
                             type="number"
                             id="poids"
                             name="poids"
+                            value="${signVitaux.poids}"
                             required
                             step="0.1"
                             min="0"
@@ -270,6 +214,7 @@
                             type="number"
                             id="taille"
                             name="taille"
+                            value="${signVitaux.taille}"
                             required
                             step="0.1"
                             min="0"
@@ -279,69 +224,16 @@
                 </div>
             </div>
 
-            <div class="mt-6 p-4 bg-gray-50 rounded-lg">
-                <div class="flex items-center justify-between">
-                    <span class="text-sm font-medium text-gray-700">IMC (Indice de Masse Corporelle)</span>
-                    <span id="bmiValue" class="text-lg font-semibold text-primary">--</span>
-                </div>
-            </div>
-        </div>
-
-        <div class="flex flex-col sm:flex-row gap-4 justify-end">
-            <a
-                    href="index.jsp"
-                    class="px-6 py-3 border border-gray-300 rounded-lg text-gray-700 font-medium hover:bg-gray-50 transition-colors text-center"
-            >
-                Annuler
-            </a>
+            <div class="flex justify-end mt-4">
             <button
                     type="submit"
                     class="px-6 py-3 bg-primary text-white rounded-lg font-medium hover:bg-secondary transition-colors shadow-sm"
             >
-                Enregistrer le Patient
+                Save Signe Vital
             </button>
-        </div>
-    </form>
+            </div>
+        </form>
+    </c:if>
 </main>
-
-<footer class="bg-white border-t border-gray-200 mt-16">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div class="text-center text-gray-600 text-sm">
-            <p>&copy; 2025 MediExpert. Plateforme de téléexpertise médicale sécurisée.</p>
-        </div>
-    </div>
-</footer>
-
-<script>
-    const poidsInput = document.getElementById('poids');
-    const tailleInput = document.getElementById('taille');
-    const bmiValue = document.getElementById('bmiValue');
-
-    function calculateBMI() {
-        const poids = parseFloat(poidsInput.value);
-        const taille = parseFloat(tailleInput.value) / 100;
-
-        if (poids > 0 && taille > 0) {
-            const bmi = (poids / (taille * taille)).toFixed(1);
-            bmiValue.textContent = bmi;
-
-            if (bmi < 18.5) {
-                bmiValue.className = 'text-lg font-semibold text-blue-600';
-            } else if (bmi >= 18.5 && bmi < 25) {
-                bmiValue.className = 'text-lg font-semibold text-green-600';
-            } else if (bmi >= 25 && bmi < 30) {
-                bmiValue.className = 'text-lg font-semibold text-yellow-600';
-            } else {
-                bmiValue.className = 'text-lg font-semibold text-red-600';
-            }
-        } else {
-            bmiValue.textContent = '--';
-            bmiValue.className = 'text-lg font-semibold text-primary';
-        }
-    }
-
-    poidsInput.addEventListener('input', calculateBMI);
-    tailleInput.addEventListener('input', calculateBMI);
-</script>
 </body>
 </html>

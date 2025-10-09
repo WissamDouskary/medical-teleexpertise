@@ -1,6 +1,5 @@
 package com.teleexpertise.servlet;
 
-import com.teleexpertise.dao.SigneVitalDAO;
 import com.teleexpertise.model.Patient;
 import com.teleexpertise.service.PatientService;
 import com.teleexpertise.service.SigneVitalService;
@@ -14,7 +13,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 
 @WebServlet("/addPatient")
-public class PatientServlet extends HttpServlet {
+public class AddPatientServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
