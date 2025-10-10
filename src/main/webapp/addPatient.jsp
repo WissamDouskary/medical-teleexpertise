@@ -48,6 +48,9 @@
                     </div>
                     <span class="text-xl font-bold text-gray-900">MediExpert</span>
                 </a>
+                <a href="patients" class="text-primary font-medium hover:text-secondary transition-colors">
+                    Liste des Patients
+                </a>
             </div>
             <div class="flex items-center gap-4">
                 <a href="" class="text-gray-600 hover:text-primary transition-colors">Logout</a>

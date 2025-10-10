@@ -7,6 +7,8 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
+import java.util.List;
+
 
 public class PatientDAO {
     public boolean savePatient(Patient patient){
@@ -51,5 +53,34 @@ public class PatientDAO {
             patient = null;
         }
         return patient;
+    }
+
+    public List<Patient> findAll(){
+        try(Session session = Dbconnection.getSessionFactory().openSession()){
+            return session.createQuery("from Patient", Patient.class).stream().toList();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public boolean isInWaitingList(Patient patient) {
+        try (Session session = Dbconnection.getSessionFactory().openSession()) {
+            Transaction tx = session.beginTransaction();
+
+            Query<FileAttente> query = session.createQuery(
+                    "FROM FileAttente WHERE patient = :patient",
+                    FileAttente.class
+            );
+            query.setParameter("patient", patient);
+
+            boolean isFound = !query.list().isEmpty();
+
+            tx.commit();
+            return isFound;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }

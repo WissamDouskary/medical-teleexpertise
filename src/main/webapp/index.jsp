@@ -1,4 +1,14 @@
+<%@ page import="com.teleexpertise.model.User" %>
+<%@ page import="com.teleexpertise.enums.Role" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+
+<%
+    User user = (User) session.getAttribute("user");
+    if (user != null && user.getRole() != null && user.getRole().equals(Role.INFIRMIER)) {
+        response.sendRedirect("addPatient.jsp");
+        return;
+    }
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>

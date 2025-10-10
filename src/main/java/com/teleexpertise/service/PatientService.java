@@ -4,6 +4,9 @@ import com.teleexpertise.dao.PatientDAO;
 import com.teleexpertise.model.Patient;
 
 import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class PatientService {
 
@@ -31,5 +34,17 @@ public class PatientService {
             return null;
         }
         return patient;
+    }
+
+    public static Map<Patient, String> findAll(){
+        List<Patient> patients = patientDAO.findAll();
+        Map<Patient, String> patientStringMap = new HashMap<>();
+
+        for(Patient p : patients){
+            if(patientDAO.isInWaitingList(p)){
+                patientStringMap.put(p, "WAITING");
+            }
+        }
+        return patientStringMap;
     }
 }
