@@ -55,9 +55,11 @@ public class PatientDAO {
         return patient;
     }
 
-    public List<Patient> findAll(){
-        try(Session session = Dbconnection.getSessionFactory().openSession()){
-            return session.createQuery("from Patient", Patient.class).stream().toList();
+    public List<Patient> findAll() {
+        try (Session session = Dbconnection.getSessionFactory().openSession()) {
+            return session.createQuery("from Patient order by id ASC", Patient.class)
+                    .stream()
+                    .toList();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
