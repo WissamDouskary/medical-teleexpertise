@@ -61,7 +61,7 @@
             </div>
             <div class="flex items-center gap-4">
                 <form action="logout" method="post">
-                <button type="submit" class="text-gray-600 hover:text-primary transition-colors">Logout</button>
+                    <button type="submit" class="text-gray-600 hover:text-primary transition-colors">Logout</button>
                 </form>
             </div>
         </div>
@@ -80,7 +80,28 @@
                 </div>
                 <h1 class="text-2xl font-bold text-gray-900">Liste des Patients</h1>
             </div>
-            <span class="text-sm text-gray-500">${patientCount} patients</span>
+            <form method="get" action="patients" class="flex items-center gap-4">
+                <label for="status" class="text-sm font-medium text-gray-700">Filtrer par statut :</label>
+                <select id="status" name="status"
+                        class="border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-700">
+                    <option value="Tous" ${selectedStatus == 'Tous' ? 'selected' : ''}>Tous</option>
+                    <option value="En attente" ${selectedStatus == 'En attente' ? 'selected' : ''}>En attente
+                    </option>
+                    <option value="En cours" ${selectedStatus == 'En cours' ? 'selected' : ''}>En cours</option>
+                    <option value="Terminée" ${selectedStatus == 'Terminée' ? 'selected' : ''}>Terminée</option>
+                    <option value="En attente avis spécialiste" ${selectedStatus == 'En attente avis spécialiste' ? 'selected' : ''}>
+                        En attente avis spécialiste
+                    </option>
+                </select>
+
+                <button type="submit"
+                        class="bg-primary hover:bg-secondary text-white px-4 py-2 rounded-lg text-sm transition-colors">
+                    Filtrer
+                </button>
+            </form>
+        </div>
+        <div>
+
         </div>
 
         <div class="overflow-x-auto">
