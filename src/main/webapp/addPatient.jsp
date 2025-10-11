@@ -1,8 +1,18 @@
+<%@ page import="com.teleexpertise.model.User" %>
+<%@ page import="com.teleexpertise.enums.Role" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <%
-    if (session.getAttribute("user") == null)
+    User user = (User) session.getAttribute("user");
+    if (user == null) {
         response.sendRedirect("login.jsp");
+        return;
+    }
+
+    if (!user.getRole().equals(Role.INFIRMIER)) {
+        response.sendRedirect("patients.jsp");
+        return;
+    }
 %>
 
 <!DOCTYPE html>
@@ -53,7 +63,9 @@
                 </a>
             </div>
             <div class="flex items-center gap-4">
-                <a href="" class="text-gray-600 hover:text-primary transition-colors">Logout</a>
+                <form action="logout" method="post">
+                    <button type="submit" class="text-gray-600 hover:text-primary transition-colors">Logout</button>
+                </form>
             </div>
         </div>
     </div>

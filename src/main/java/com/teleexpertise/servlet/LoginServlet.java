@@ -41,8 +41,8 @@ public class LoginServlet extends HttpServlet {
 
             if (user.getRole().equals(Role.INFIRMIER)) {
                 resp.sendRedirect("addPatient.jsp");
-            } else {
-                resp.sendRedirect("dashboard.jsp");
+            } else if(user.getRole().equals(Role.GENERALISTE)){
+                resp.sendRedirect("patients");
             }
 
         } catch (Exception e) {

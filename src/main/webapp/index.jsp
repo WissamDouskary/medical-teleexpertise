@@ -4,9 +4,14 @@
 
 <%
     User user = (User) session.getAttribute("user");
-    if (user != null && user.getRole() != null && user.getRole().equals(Role.INFIRMIER)) {
-        response.sendRedirect("addPatient.jsp");
-        return;
+    if (user != null) {
+        if (user.getRole().equals(Role.INFIRMIER)) {
+            response.sendRedirect("addPatient.jsp");
+            return;
+        } else if (user.getRole().equals(Role.GENERALISTE)) {
+            response.sendRedirect("patients");
+            return;
+        }
     }
 %>
 <!DOCTYPE html>

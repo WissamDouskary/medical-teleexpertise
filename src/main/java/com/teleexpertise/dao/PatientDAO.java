@@ -1,6 +1,7 @@
 package com.teleexpertise.dao;
 
 import com.teleexpertise.config.Dbconnection;
+import com.teleexpertise.model.Consultation;
 import com.teleexpertise.model.FileAttente;
 import com.teleexpertise.model.Patient;
 import org.hibernate.Session;
@@ -65,24 +66,43 @@ public class PatientDAO {
         }
     }
 
-    public boolean isInWaitingList(Patient patient) {
+    public String getPatientStatus(Patient patient) {
         try (Session session = Dbconnection.getSessionFactory().openSession()) {
-            Transaction tx = session.beginTransaction();
 
-            Query<FileAttente> query = session.createQuery(
-                    "FROM FileAttente WHERE patient = :patient",
-                    FileAttente.class
-            );
-            query.setParameter("patient", patient);
+            Query<FileAttente> attenteQuery = session.createQuery(
+                    "FROM FileAttente WHERE patient = :patient", FileAttente.class);
+            attenteQuery.setParameter("patient", patient);
 
-            boolean isFound = !query.list().isEmpty();
+            if (!attenteQuery.list().isEmpty()) {
+                return "En attente";
+            }
 
-            tx.commit();
-            return isFound;
+            Query<Consultation> consultQuery = session.createQuery(
+                    "FROM Consultation WHERE patient = :patient ORDER BY dateConsultation DESC",
+                    Consultation.class);
+            consultQuery.setParameter("patient", patient);
+            consultQuery.setMaxResults(1);
+
+            Consultation latestConsult = consultQuery.uniqueResult();
+
+            if (latestConsult != null) {
+                switch (latestConsult.getStatut()) {
+                    case TERMINEE:
+                        return "Terminée";
+                    case EN_COURS:
+                        return "En cours";
+                    case EN_ATTENTE_AVIS_SPECIALISTE:
+                        return "En attente avis spécialiste";
+                    default:
+                        return "Inconnu";
+                }
+            }
+
+            return "Aucun dossier";
 
         } catch (Exception e) {
             e.printStackTrace();
-            return false;
+            return "Erreur";
         }
     }
 }

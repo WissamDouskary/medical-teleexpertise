@@ -1,5 +1,20 @@
+<%@ page import="com.teleexpertise.model.User" %>
+<%@ page import="com.teleexpertise.enums.Role" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+<%
+    User user = (User) session.getAttribute("user");
+    if (user == null) {
+        response.sendRedirect("login.jsp");
+        return;
+    }
+
+    if (!(user.getRole().equals(Role.GENERALISTE) || user.getRole().equals(Role.INFIRMIER))) {
+        response.sendRedirect("index.jsp");
+        return;
+    }
+%>
 <html>
 <head>
     <title>Liste des Patients - MediExpert</title>
@@ -45,7 +60,9 @@
                 </a>
             </div>
             <div class="flex items-center gap-4">
-                <a href="" class="text-gray-600 hover:text-primary transition-colors">Logout</a>
+                <form action="logout" method="post">
+                <button type="submit" class="text-gray-600 hover:text-primary transition-colors">Logout</button>
+                </form>
             </div>
         </div>
     </div>
@@ -80,17 +97,38 @@
                 </tr>
                 </thead>
                 <tbody>
-
                 <c:forEach items="${patients}" var="pa">
-                <tr class="border-b border-gray-100 hover:bg-gray-50 transition-colors">
-                    <td class="py-4 px-4 text-sm text-gray-900">${pa.key.nom}</td>
-                    <td class="py-4 px-4 text-sm text-gray-900">${pa.key.prenom}</td>
-                    <td class="py-4 px-4 text-sm text-gray-600">${pa.key.dateNaissance}</td>
-                    <td class="py-4 px-4 text-sm text-gray-600">${pa.key.telephone}</td>
-                    <td class="py-4 px-4 text-sm text-gray-600 font-mono">${pa.key.numSecuriteSociale}</td>
-                    <td class="py-4 px-4 text-sm text-gray-600">${pa.key.adresse}</td>
-                    <td class="py-4 px-4 text-sm text-gray-600">${pa.value}</td>
-                </tr>
+                    <tr class="border-b border-gray-100 hover:bg-gray-50 transition-colors">
+                        <td class="py-4 px-4 text-sm text-gray-900">${pa.key.nom}</td>
+                        <td class="py-4 px-4 text-sm text-gray-900">${pa.key.prenom}</td>
+                        <td class="py-4 px-4 text-sm text-gray-600">${pa.key.dateNaissance}</td>
+                        <td class="py-4 px-4 text-sm text-gray-600">${pa.key.telephone}</td>
+                        <td class="py-4 px-4 text-sm text-gray-600 font-mono">${pa.key.numSecuriteSociale}</td>
+                        <td class="py-4 px-4 text-sm text-gray-600">${pa.key.adresse}</td>
+                        <td class="py-4 px-4 text-sm text-gray-600">${pa.value}</td>
+
+                        <c:if test="${sessionScope.user != null && sessionScope.user.role == 'GENERALISTE'}">
+                            <td class="py-4 px-4 mt-4 text-sm flex gap-2">
+
+                                <form action="viewPatient" method="get">
+                                    <input type="hidden" name="id" value="${pa.key.id}">
+                                    <button type="submit"
+                                            class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded-lg text-sm">
+                                        Voir
+                                    </button>
+                                </form>
+
+                                <form action="consultPatient" method="get">
+                                    <input type="hidden" name="id" value="${pa.key.id}">
+                                    <button type="submit"
+                                            class="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded-lg text-sm">
+                                        Consulter
+                                    </button>
+                                </form>
+
+                            </td>
+                        </c:if>
+                    </tr>
                 </c:forEach>
                 </tbody>
             </table>

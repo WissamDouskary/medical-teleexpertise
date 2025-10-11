@@ -37,15 +37,15 @@ public class PatientService {
         return patient;
     }
 
-    public static Map<Patient, String> findAll(){
-        List<Patient> patients = patientDAO.findAll();
-        Map<Patient, String> patientStringMap = new LinkedHashMap<>();
+    public static Map<Patient, String> findAll() {
+        PatientDAO dao = new PatientDAO();
+        Map<Patient, String> map = new LinkedHashMap<>();
 
-        for(Patient p : patients){
-            if(patientDAO.isInWaitingList(p)){
-                patientStringMap.put(p, "WAITING");
-            }
+        for (Patient p : dao.findAll()) {
+            String status = dao.getPatientStatus(p);
+            map.put(p, status);
         }
-        return patientStringMap;
+
+        return map;
     }
 }
