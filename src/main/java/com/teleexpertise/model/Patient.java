@@ -18,6 +18,7 @@ public class Patient {
     private String numSecuriteSociale;
     private String adresse;
     private String telephone;
+    private LocalDate addingIn;
 
     @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<SigneVital> signesVitaux = new ArrayList<>();
@@ -32,6 +33,7 @@ public class Patient {
         this.numSecuriteSociale = numSecuriteSociale;
         this.adresse = adresse;
         this.telephone = telephone;
+        this.addingIn = LocalDate.now();
         this.signesVitaux = signesVitaux;
         this.consultations = consultations;
     }
@@ -110,6 +112,14 @@ public class Patient {
 
     public void setConsultations(List<Consultation> consultations) {
         this.consultations = consultations;
+    }
+
+    public LocalDate getAddingIn() {
+        return addingIn;
+    }
+
+    public void setAddingIn(LocalDate addingIn) {
+        this.addingIn = addingIn;
     }
 
     @Override

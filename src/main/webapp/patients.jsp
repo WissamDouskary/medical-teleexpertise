@@ -68,7 +68,7 @@
     </div>
 </nav>
 
-<main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+<main class="max-w-9xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
     <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 md:p-8">
         <div class="flex items-center justify-between mb-6">
             <div class="flex items-center gap-3">
@@ -81,7 +81,7 @@
                 <h1 class="text-2xl font-bold text-gray-900">Liste des Patients</h1>
             </div>
             <form method="get" action="patients" class="flex items-center gap-4">
-                <label for="status" class="text-sm font-medium text-gray-700">Filtrer par statut :</label>
+                <label for="status" class="text-sm font-medium text-gray-700">Filtrer :</label>
                 <select id="status" name="status"
                         class="border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-700">
                     <option value="Tous" ${selectedStatus == 'Tous' ? 'selected' : ''}>Tous</option>
@@ -89,6 +89,7 @@
                     </option>
                     <option value="En cours" ${selectedStatus == 'En cours' ? 'selected' : ''}>En cours</option>
                     <option value="Terminée" ${selectedStatus == 'Terminée' ? 'selected' : ''}>Terminée</option>
+                    <option value="Today" ${selectedStatus == 'Today' ? 'selected' : ''}>Today</option>
                     <option value="En attente avis spécialiste" ${selectedStatus == 'En attente avis spécialiste' ? 'selected' : ''}>
                         En attente avis spécialiste
                     </option>
@@ -115,6 +116,7 @@
                     <th class="text-left py-3 px-4 text-sm font-semibold text-gray-700">N° Sécurité Sociale</th>
                     <th class="text-left py-3 px-4 text-sm font-semibold text-gray-700">Adresse</th>
                     <th class="text-left py-3 px-4 text-sm font-semibold text-gray-700">Status</th>
+                    <th class="text-left py-3 px-4 text-sm font-semibold text-gray-700">Added Date</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -127,6 +129,7 @@
                         <td class="py-4 px-4 text-sm text-gray-600 font-mono">${pa.key.numSecuriteSociale}</td>
                         <td class="py-4 px-4 text-sm text-gray-600">${pa.key.adresse}</td>
                         <td class="py-4 px-4 text-sm text-gray-600">${pa.value}</td>
+                        <td class="py-4 px-4 text-sm text-gray-600">${pa.key.addingIn}</td>
 
                         <c:if test="${sessionScope.user != null && sessionScope.user.role == 'GENERALISTE'}">
                             <td class="py-4 px-4 mt-4 text-sm flex gap-2">

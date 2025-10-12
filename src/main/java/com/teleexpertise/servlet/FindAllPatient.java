@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -21,7 +22,19 @@ public class FindAllPatient extends HttpServlet {
         String filterStatus = req.getParameter("status");
         Map<Patient, String> patients = PatientService.findAll();
 
-        if (filterStatus != null && !filterStatus.isEmpty() && !filterStatus.equals("Tous")) {
+        if(filterStatus != null && filterStatus.equals("Today")){
+            Map<Patient, String> filtered = new LinkedHashMap<>();
+            LocalDate today = LocalDate.now();
+            for(Map.Entry<Patient, String> entry : patients.entrySet()){
+                Patient pa = entry.getKey();
+                if(pa.getAddingIn().equals(today)){
+                    filtered.put(pa, entry.getValue());
+                }
+            }
+            patients = filtered;
+        }
+
+        if (filterStatus != null && !filterStatus.isEmpty() && !filterStatus.equals("Tous") && !filterStatus.equals("Today")) {
             Map<Patient, String> filtered = new LinkedHashMap<>();
             for (Map.Entry<Patient, String> entry : patients.entrySet()) {
                 if (entry.getValue().equalsIgnoreCase(filterStatus)) {
