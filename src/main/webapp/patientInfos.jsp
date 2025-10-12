@@ -1,5 +1,7 @@
 <%@ page import="com.teleexpertise.model.User" %>
 <%@ page import="com.teleexpertise.enums.Role" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <%
@@ -15,7 +17,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Détails du Patient - Téléexpertise Médicale</title>
+    <title>Consultations du Patient - Téléexpertise Médicale</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -66,7 +68,7 @@
     </div>
 </nav>
 
-<main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+<main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
     <div class="mb-8">
         <div class="flex items-center gap-4 mb-4">
             <a href="patients" class="text-primary hover:text-secondary transition-colors">
@@ -74,109 +76,189 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
                 </svg>
             </a>
-            <h1 class="text-3xl font-bold text-gray-900">Dossier Patient #${patient.id}</h1>
+            <h1 class="text-3xl font-bold text-gray-900">Historique des Consultations</h1>
         </div>
-        <p class="text-gray-600">Informations détaillées du patient et signes vitaux</p>
+        <p class="text-gray-600">Patient: <span class="font-semibold">${patient.prenom} ${patient.nom}</span> - N° ${patient.numSecuriteSociale}</p>
     </div>
 
-    <!-- Patient Information Card -->
-    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 md:p-8 mb-6">
-        <div class="flex items-center gap-3 mb-6">
-            <div class="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center">
-                <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-8">
+        <div class="flex items-center justify-between">
+            <div class="flex items-center gap-4">
+                <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
+                    <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                    </svg>
+                </div>
+                <div>
+                    <h2 class="text-xl font-semibold text-gray-900">${patient.prenom} ${patient.nom}</h2>
+                    <p class="text-sm text-gray-600">Né(e) le ${patient.dateNaissance} • ${patient.telephone}</p>
+                </div>
+            </div>
+            <div class="text-right">
+                <p class="text-sm text-gray-500">Total Consultations</p>
+                <p class="text-2xl font-bold text-primary">${consultations.size()}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="space-y-6">
+        <c:forEach var="consultation" items="${consultations}">
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                <div class="bg-gradient-to-r from-primary to-secondary p-6">
+                    <div class="flex items-center justify-between text-white">
+                        <div>
+                            <div class="flex items-center gap-3 mb-2">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                          d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                                </svg>
+                                <h3 class="text-xl font-semibold">Consultation #${consultation.id}</h3>
+                            </div>
+                            <p class="text-white/90">
+                                    ${consultation.dateConsultation}
+                            </p>
+                        </div>
+                        <div class="text-right">
+                            <c:choose>
+                                <c:when test="${consultation.statut.name() == 'TERMINEE'}">
+                                    <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800">
+                                        Terminée
+                                    </span>
+                                </c:when>
+                                <c:when test="${consultation.statut.name() == 'EN_COURS'}">
+                                    <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800">
+                                        En cours
+                                    </span>
+                                </c:when>
+                                <c:when test="${consultation.statut.name() == 'PLANIFIEE'}">
+                                    <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-yellow-100 text-yellow-800">
+                                        Planifiée
+                                    </span>
+                                </c:when>
+                                <c:otherwise>
+                                    <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-red-100 text-red-800">
+                                        Annulée
+                                    </span>
+                                </c:otherwise>
+                            </c:choose>
+                            <p class="text-white/90 text-sm mt-2">Coût: ${consultation.cout} DH</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="p-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-500 mb-1">Médecin Généraliste</label>
+                            <p class="text-base font-semibold text-gray-900">
+                                Dr. ${consultation.medecinGeneraliste.prenom} ${consultation.medecinGeneraliste.nom}
+                            </p>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-500 mb-1">Motif de Consultation</label>
+                            <p class="text-base font-semibold text-gray-900">${consultation.motif}</p>
+                        </div>
+
+                        <div class="md:col-span-2">
+                            <label class="block text-sm font-medium text-gray-500 mb-1">Observations</label>
+                            <p class="text-base text-gray-900 bg-gray-50 p-4 rounded-lg">${consultation.observations}</p>
+                        </div>
+
+                        <div class="md:col-span-2">
+                            <label class="block text-sm font-medium text-gray-500 mb-1">Diagnostic</label>
+                            <p class="text-base text-gray-900 bg-gray-50 p-4 rounded-lg">${consultation.diagnostic}</p>
+                        </div>
+                    </div>
+
+                    <c:if test="${not empty consultation.acteMedicals}">
+                        <div class="border-t border-gray-200 pt-6">
+                            <div class="flex items-center gap-2 mb-4">
+                                <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                          d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+                                </svg>
+                                <h4 class="text-lg font-semibold text-gray-900">Actes Médicaux</h4>
+                                <span class="text-sm text-gray-500">(${consultation.acteMedicals.size()} acte(s))</span>
+                            </div>
+
+                            <div class="space-y-3">
+                                <c:forEach var="acte" items="${consultation.acteMedicals}">
+                                    <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg border border-gray-200">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center">
+                                                <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                          d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                                </svg>
+                                            </div>
+                                            <div>
+                                                <p class="font-semibold text-gray-900">${acte.type}</p>
+                                                <p class="text-sm text-gray-500">Acte médical #${acte.id}</p>
+                                            </div>
+                                        </div>
+                                        <div class="text-right">
+                                            <p class="text-lg font-bold text-primary">${acte.price} DH</p>
+                                        </div>
+                                    </div>
+                                </c:forEach>
+                            </div>
+
+                            <div class="mt-4 p-4 bg-primary/5 rounded-lg border border-primary/20">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-sm font-medium text-gray-700">Coût total des actes médicaux</span>
+                                    <span class="text-xl font-bold text-primary">
+                                        <c:set var="totalActes" value="0"/>
+                                        <c:forEach var="acte" items="${consultation.acteMedicals}">
+                                            <c:set var="totalActes" value="${totalActes + acte.price}"/>
+                                        </c:forEach>
+                                        ${totalActes} DH
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </c:if>
+
+                    <c:if test="${empty consultation.acteMedicals}">
+                        <div class="border-t border-gray-200 pt-6">
+                            <div class="text-center py-8 text-gray-500">
+                                <svg class="w-12 h-12 mx-auto mb-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                          d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                                </svg>
+                                <p>Aucun acte médical enregistré pour cette consultation</p>
+                            </div>
+                        </div>
+                    </c:if>
+                </div>
+            </div>
+        </c:forEach>
+
+        <c:if test="${empty consultations}">
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-12 text-center">
+                <svg class="w-16 h-16 mx-auto mb-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                          d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                          d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                 </svg>
+                <h3 class="text-lg font-semibold text-gray-900 mb-2">Aucune consultation</h3>
+                <p class="text-gray-600">Ce patient n'a pas encore de consultations enregistrées.</p>
             </div>
-            <h2 class="text-xl font-semibold text-gray-900">Informations du Patient</h2>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
-                <label class="block text-sm font-medium text-gray-500 mb-1">Nom</label>
-                <p class="text-base font-semibold text-gray-900">${patient.nom}</p>
-            </div>
-
-            <div>
-                <label class="block text-sm font-medium text-gray-500 mb-1">Prénom</label>
-                <p class="text-base font-semibold text-gray-900">${patient.prenom}</p>
-            </div>
-
-            <div>
-                <label class="block text-sm font-medium text-gray-500 mb-1">Date de Naissance</label>
-                <p class="text-base font-semibold text-gray-900">${patient.dateNaissance}</p>
-            </div>
-
-            <div>
-                <label class="block text-sm font-medium text-gray-500 mb-1">N° Sécurité Sociale</label>
-                <p class="text-base font-semibold text-gray-900">${patient.numSecuriteSociale}</p>
-            </div>
-
-            <div>
-                <label class="block text-sm font-medium text-gray-500 mb-1">Téléphone</label>
-                <p class="text-base font-semibold text-gray-900">${patient.telephone}</p>
-            </div>
-
-            <div class="md:col-span-2">
-                <label class="block text-sm font-medium text-gray-500 mb-1">Adresse</label>
-                <p class="text-base font-semibold text-gray-900">${patient.adresse}</p>
-            </div>
-        </div>
+        </c:if>
     </div>
 
-    <!-- Vital Signs Card -->
-    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 md:p-8">
-        <div class="flex items-center gap-3 mb-6">
-            <div class="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center">
-                <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                          d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
-                </svg>
-            </div>
-            <h2 class="text-xl font-semibold text-gray-900">Signes Vitaux</h2>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div class="p-4 bg-gray-50 rounded-lg">
-                <label class="block text-sm font-medium text-gray-500 mb-1">Tension Artérielle</label>
-                <p class="text-2xl font-bold text-primary">${signes.tensionArterielle} <span class="text-sm font-normal text-gray-600">mmHg</span></p>
-            </div>
-
-            <div class="p-4 bg-gray-50 rounded-lg">
-                <label class="block text-sm font-medium text-gray-500 mb-1">Fréquence Cardiaque</label>
-                <p class="text-2xl font-bold text-primary">${signes.frequenceCardiaque} <span class="text-sm font-normal text-gray-600">bpm</span></p>
-            </div>
-
-            <div class="p-4 bg-gray-50 rounded-lg">
-                <label class="block text-sm font-medium text-gray-500 mb-1">Température</label>
-                <p class="text-2xl font-bold text-primary">${signes.temperature} <span class="text-sm font-normal text-gray-600">°C</span></p>
-            </div>
-
-            <div class="p-4 bg-gray-50 rounded-lg">
-                <label class="block text-sm font-medium text-gray-500 mb-1">Fréquence Respiratoire</label>
-                <p class="text-2xl font-bold text-primary">${signes.frequenceRespiratoire} <span class="text-sm font-normal text-gray-600">rpm</span></p>
-            </div>
-
-            <div class="p-4 bg-gray-50 rounded-lg">
-                <label class="block text-sm font-medium text-gray-500 mb-1">Poids</label>
-                <p class="text-2xl font-bold text-primary">${signes.poids} <span class="text-sm font-normal text-gray-600">kg</span></p>
-            </div>
-
-            <div class="p-4 bg-gray-50 rounded-lg">
-                <label class="block text-sm font-medium text-gray-500 mb-1">Taille</label>
-                <p class="text-2xl font-bold text-primary">${signes.taille} <span class="text-sm font-normal text-gray-600">cm</span></p>
-            </div>
-        </div>
-
-    </div>
-
-    <!-- Action Buttons -->
-    <div class="flex flex-col sm:flex-row gap-4 justify-end mt-8">
+    <div class="flex flex-col sm:flex-row gap-4 justify-between mt-8">
         <a
                 href="patients"
                 class="px-6 py-3 border border-gray-300 rounded-lg text-gray-700 font-medium hover:bg-gray-50 transition-colors text-center"
         >
-            Retour à la liste
+            ← Retour à la liste des patients
+        </a>
+        <a
+                href="consultPatient?patientId=${patient.id}"
+                class="px-6 py-3 bg-primary rounded-lg text-white font-medium hover:bg-secondary transition-colors text-center"
+        >
+            + Nouvelle consultation
         </a>
     </div>
 </main>

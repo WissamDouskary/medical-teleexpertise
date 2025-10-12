@@ -51,6 +51,10 @@ public class Consultation {
 
     }
 
+    public Long getId() {
+        return id;
+    }
+
     public LocalDateTime getDateConsultation() {
         return dateConsultation;
     }

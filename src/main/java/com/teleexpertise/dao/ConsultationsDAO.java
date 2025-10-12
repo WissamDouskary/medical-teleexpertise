@@ -4,11 +4,14 @@ import com.teleexpertise.config.Dbconnection;
 import com.teleexpertise.model.ActeMedical;
 import com.teleexpertise.model.Consultation;
 import com.teleexpertise.model.FileAttente;
+import com.teleexpertise.model.Patient;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class ConsultationsDAO {
@@ -26,6 +29,18 @@ public class ConsultationsDAO {
         catch (Exception e){
             e.printStackTrace();
             return false;
+        }
+    }
+
+    public List<Consultation> findConsultationByPatientId(Patient patient) {
+        try (Session session = Dbconnection.getSessionFactory().openSession()) {
+            Query<Consultation> query = session.createQuery(
+                    "SELECT DISTINCT c FROM Consultation c LEFT JOIN FETCH c.acteMedicals WHERE c.patient = :patient", Consultation.class);
+            query.setParameter("patient", patient);
+            return query.list();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return List.of();
         }
     }
 

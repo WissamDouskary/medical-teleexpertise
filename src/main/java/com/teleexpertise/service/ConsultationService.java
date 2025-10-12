@@ -7,6 +7,7 @@ import com.teleexpertise.model.MedecinGeneraliste;
 import com.teleexpertise.model.Patient;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class ConsultationService {
     private static ConsultationsDAO consultationsDAO = new ConsultationsDAO();
@@ -30,5 +31,9 @@ public class ConsultationService {
 
     public static Consultation findById(Long id){
         return consultationsDAO.findById(id);
+    }
+
+    public static List<Consultation> findByPatientId(Patient patient){
+        return consultationsDAO.findConsultationByPatientId(patient);
     }
 }
