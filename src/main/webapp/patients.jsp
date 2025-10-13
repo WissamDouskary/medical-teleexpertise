@@ -85,14 +85,12 @@
                 <select id="status" name="status"
                         class="border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-700">
                     <option value="Tous" ${selectedStatus == 'Tous' ? 'selected' : ''}>Tous</option>
-                    <option value="En attente" ${selectedStatus == 'En attente' ? 'selected' : ''}>En attente
-                    </option>
                     <option value="En cours" ${selectedStatus == 'En cours' ? 'selected' : ''}>En cours</option>
-                    <option value="Terminée" ${selectedStatus == 'Terminée' ? 'selected' : ''}>Terminée</option>
-                    <option value="Today" ${selectedStatus == 'Today' ? 'selected' : ''}>Today</option>
                     <option value="En attente avis spécialiste" ${selectedStatus == 'En attente avis spécialiste' ? 'selected' : ''}>
                         En attente avis spécialiste
                     </option>
+                    <option value="Terminée" ${selectedStatus == 'Terminée' ? 'selected' : ''}>Terminée</option>
+                    <option value="Today" ${selectedStatus == 'Today' ? 'selected' : ''}>Today</option>
                 </select>
 
                 <button type="submit"
