@@ -32,6 +32,7 @@ public class RequestService {
         expertiseRequest.setSpecialiste(specialiste);
         expertiseRequest.setPriorite(prioriteExpertise);
         expertiseRequest.setQuestion(question);
+        expertiseRequest.setStatut(StatutExpertise.EN_ATTENTE);
 
         return requestDAO.save(expertiseRequest);
     }
