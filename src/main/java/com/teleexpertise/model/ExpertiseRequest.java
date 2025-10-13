@@ -26,4 +26,60 @@ public class ExpertiseRequest {
     @ManyToOne
     @JoinColumn(name = "specialiste_id")
     private MedecinSpecialiste specialiste;
+
+    public String getQuestion() {
+        return question;
+    }
+
+    public void setQuestion(String question) {
+        this.question = question;
+    }
+
+    public String getAvisSpecialiste() {
+        return avisSpecialiste;
+    }
+
+    public void setAvisSpecialiste(String avisSpecialiste) {
+        this.avisSpecialiste = avisSpecialiste;
+    }
+
+    public String getRecommandations() {
+        return recommandations;
+    }
+
+    public void setRecommandations(String recommandations) {
+        this.recommandations = recommandations;
+    }
+
+    public StatutExpertise getStatut() {
+        return statut;
+    }
+
+    public void setStatut(StatutExpertise statut) {
+        this.statut = statut;
+    }
+
+    public PrioriteExpertise getPriorite() {
+        return priorite;
+    }
+
+    public void setPriorite(PrioriteExpertise priorite) {
+        this.priorite = priorite;
+    }
+
+    public Consultation getConsultation() {
+        return consultation;
+    }
+
+    public void setConsultation(Consultation consultation) {
+        this.consultation = consultation;
+    }
+
+    public MedecinSpecialiste getSpecialiste() {
+        return specialiste;
+    }
+
+    public void setSpecialiste(MedecinSpecialiste specialiste) {
+        this.specialiste = specialiste;
+    }
 }

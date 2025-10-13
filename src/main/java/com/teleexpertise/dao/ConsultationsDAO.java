@@ -47,7 +47,8 @@ public class ConsultationsDAO {
     public Consultation findById(Long id){
         try(Session session = Dbconnection.getSessionFactory().openSession()){
             Transaction tx = session.beginTransaction();
-            Query<Consultation> consultationQuery = session.createQuery("FROM Consultation WHERE id = :id", Consultation.class);
+            Query<Consultation> consultationQuery = session.createQuery("SELECT c FROM Consultation c LEFT JOIN c.acteMedicals LEFT JOIN c.patient WHERE c.id = :id", Consultation.class);
+            consultationQuery.setParameter("id", id);
             return consultationQuery.uniqueResult();
         } catch (Exception e) {
             throw new RuntimeException(e);

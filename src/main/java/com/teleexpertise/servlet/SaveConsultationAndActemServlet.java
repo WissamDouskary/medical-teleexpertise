@@ -30,11 +30,11 @@ public class SaveConsultationAndActemServlet extends HttpServlet {
         double cout = Double.parseDouble(req.getParameter("cout"));
         String statutParam = req.getParameter("statut");
 
-        StatutConsultation statutConsultation;
+        StatutConsultation statutConsultation = null;
         switch (statutParam) {
             case "EN_COURS" -> statutConsultation = StatutConsultation.EN_COURS;
             case "TERMINEE" -> statutConsultation = StatutConsultation.TERMINEE;
-            default -> statutConsultation = StatutConsultation.EN_ATTENTE_AVIS_SPECIALISTE;
+            case "EN_ATTENTE_AVIS_SPECIALISTE" -> statutConsultation = StatutConsultation.EN_ATTENTE_AVIS_SPECIALISTE;
         }
 
         String[] libelle = req.getParameterValues("libelle[]");

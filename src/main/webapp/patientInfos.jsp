@@ -118,6 +118,9 @@
                             <p class="text-white/90">
                                     ${consultation.dateConsultation}
                             </p>
+                            <c:if test="${consultation.statut.name() == 'EN_ATTENTE_AVIS_SPECIALISTE'}">
+                            <a class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium underline text-white font-bold mt-4" href="${pageContext.request.contextPath}/createRequest?consultationId=${consultation.id}">Request Specialiste</a>
+                            </c:if>
                         </div>
                         <div class="text-right">
                             <c:choose>
@@ -131,9 +134,9 @@
                                         En cours
                                     </span>
                                 </c:when>
-                                <c:when test="${consultation.statut.name() == 'PLANIFIEE'}">
+                                <c:when test="${consultation.statut.name() == 'EN_ATTENTE_AVIS_SPECIALISTE'}">
                                     <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-yellow-100 text-yellow-800">
-                                        Planifiée
+                                        En Attente Avis Specialist
                                     </span>
                                 </c:when>
                                 <c:otherwise>
@@ -169,6 +172,11 @@
                         <div class="md:col-span-2">
                             <label class="block text-sm font-medium text-gray-500 mb-1">Diagnostic</label>
                             <p class="text-base text-gray-900 bg-gray-50 p-4 rounded-lg">${consultation.diagnostic}</p>
+                        </div>
+
+                        <div class="md:col-span-2">
+                            <label class="block text-sm font-medium text-gray-500 mb-1">Doctor</label>
+                            <p class="text-lg font-bold text-primary text-gray-900 bg-gray-50 p-4 rounded-lg ">${consultation.medecinGeneraliste.tarif} DH</p>
                         </div>
                     </div>
 
@@ -213,7 +221,7 @@
                                         <c:forEach var="acte" items="${consultation.acteMedicals}">
                                             <c:set var="totalActes" value="${totalActes + acte.price}"/>
                                         </c:forEach>
-                                        ${totalActes} DH
+                                        ${totalActes + consultation.medecinGeneraliste.tarif} DH
                                     </span>
                                 </div>
                             </div>
@@ -255,7 +263,7 @@
             ← Retour à la liste des patients
         </a>
         <a
-                href="consultPatient?patientId=${patient.id}"
+                href="consultPatient?id=${patient.id}"
                 class="px-6 py-3 bg-primary rounded-lg text-white font-medium hover:bg-secondary transition-colors text-center"
         >
             + Nouvelle consultation
