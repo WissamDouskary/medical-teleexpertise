@@ -57,6 +57,11 @@ public class SaveConsultationAndActemServlet extends HttpServlet {
             ActeMedicalService.saveActeMedicals(consultation, libelle, coutActe);
         }
 
+        if (statutConsultation.equals(StatutConsultation.EN_ATTENTE_AVIS_SPECIALISTE) && consultation != null) {
+            resp.sendRedirect("http://localhost:3000/medical_teleexpertise/createRequest?consultationId=" + consultation.getId());
+            return;
+        }
+
         resp.sendRedirect("patients");
     }
 }
