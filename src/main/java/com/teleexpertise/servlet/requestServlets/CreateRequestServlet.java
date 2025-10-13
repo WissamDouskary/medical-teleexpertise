@@ -1,13 +1,11 @@
-package com.teleexpertise.servlet;
+package com.teleexpertise.servlet.requestServlets;
 
-import com.teleexpertise.model.MedecinGeneraliste;
 import com.teleexpertise.service.RequestService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 

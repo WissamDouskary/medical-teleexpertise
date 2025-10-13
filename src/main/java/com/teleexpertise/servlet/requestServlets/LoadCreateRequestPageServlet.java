@@ -1,4 +1,4 @@
-package com.teleexpertise.servlet;
+package com.teleexpertise.servlet.requestServlets;
 
 import com.teleexpertise.model.Consultation;
 import com.teleexpertise.model.MedecinSpecialiste;

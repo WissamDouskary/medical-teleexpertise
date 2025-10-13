@@ -1,4 +1,4 @@
-package com.teleexpertise.servlet;
+package com.teleexpertise.servlet.signesServlets;
 
 import com.teleexpertise.model.Patient;
 import com.teleexpertise.service.PatientService;

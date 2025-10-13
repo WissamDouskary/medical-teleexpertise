@@ -22,6 +22,24 @@ public class MedecinGeneraliste extends User {
 
     }
 
+    @Override
+    public String getNom() {
+        return super.getNom();
+    }
+
+    @Override
+    public String getPrenom() {
+        return super.getPrenom();
+    }
+
+    public List<Consultation> getConsultations() {
+        return consultations;
+    }
+
+    public void setConsultations(List<Consultation> consultations) {
+        this.consultations = consultations;
+    }
+
     public double getTarif() {
         return tarif;
     }

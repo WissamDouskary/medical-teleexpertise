@@ -82,4 +82,12 @@ public class ExpertiseRequest {
     public void setSpecialiste(MedecinSpecialiste specialiste) {
         this.specialiste = specialiste;
     }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 }

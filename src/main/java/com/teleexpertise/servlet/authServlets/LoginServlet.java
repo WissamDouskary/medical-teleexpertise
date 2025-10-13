@@ -1,19 +1,14 @@
-package com.teleexpertise.servlet;
+package com.teleexpertise.servlet.authServlets;
 
-import com.teleexpertise.dao.UserDAO;
 import com.teleexpertise.enums.Role;
 import com.teleexpertise.model.User;
 import com.teleexpertise.service.LoginService;
-import com.teleexpertise.util.passwordUtil;
-import jakarta.persistence.NoResultException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import org.hibernate.Session;
-import org.postgresql.util.PasswordUtil;
 
 import java.io.IOException;
 
@@ -43,6 +38,8 @@ public class LoginServlet extends HttpServlet {
                 resp.sendRedirect("addPatient.jsp");
             } else if(user.getRole().equals(Role.GENERALISTE)){
                 resp.sendRedirect("patients");
+            } else if(user.getRole().equals(Role.SPECIALISTE)){
+                resp.sendRedirect("requests");
             }
 
         } catch (Exception e) {

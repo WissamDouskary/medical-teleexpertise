@@ -2,10 +2,13 @@ package com.teleexpertise.service;
 
 import com.teleexpertise.dao.RequestDAO;
 import com.teleexpertise.enums.PrioriteExpertise;
+import com.teleexpertise.enums.StatutExpertise;
 import com.teleexpertise.model.Consultation;
 import com.teleexpertise.model.ExpertiseRequest;
 import com.teleexpertise.model.MedecinGeneraliste;
 import com.teleexpertise.model.MedecinSpecialiste;
+
+import java.util.List;
 
 public class RequestService {
     private static RequestDAO requestDAO = new RequestDAO();
@@ -35,5 +38,9 @@ public class RequestService {
         expertiseRequest.setStatut(StatutExpertise.EN_ATTENTE);
 
         return requestDAO.save(expertiseRequest);
+    }
+
+    public static List<ExpertiseRequest> findAllRequests(MedecinSpecialiste specialiste){
+        return requestDAO.findAll(specialiste);
     }
 }

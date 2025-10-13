@@ -1,4 +1,4 @@
-package com.teleexpertise.servlet;
+package com.teleexpertise.servlet.authServlets;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;

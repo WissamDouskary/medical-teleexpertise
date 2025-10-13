@@ -1,4 +1,4 @@
-package com.teleexpertise.servlet;
+package com.teleexpertise.servlet.consultationServlets;
 
 import com.teleexpertise.enums.StatutConsultation;
 import com.teleexpertise.model.Consultation;
