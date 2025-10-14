@@ -1,6 +1,7 @@
 package com.teleexpertise.dao;
 
 import com.teleexpertise.config.Dbconnection;
+import com.teleexpertise.enums.StatutExpertise;
 import com.teleexpertise.model.ExpertiseRequest;
 import com.teleexpertise.model.MedecinSpecialiste;
 import org.hibernate.Session;
@@ -17,6 +18,23 @@ public class RequestDAO {
             tx.commit();
             return true;
         } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean update(Long id, StatutExpertise statutExpertise, String avisSpecialiste, String recommendation){
+        try(Session session = Dbconnection.getSessionFactory().openSession()){
+            Transaction tx = session.beginTransaction();
+            ExpertiseRequest request = session.find(ExpertiseRequest.class, id);
+            request.setStatut(statutExpertise);
+            request.setAvisSpecialiste(avisSpecialiste);
+            request.setRecommandations(recommendation);
+            session.persist(request);
+            tx.commit();
+            return true;
+        }
+        catch (Exception e){
             e.printStackTrace();
             return false;
         }

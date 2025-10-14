@@ -143,7 +143,7 @@
         <p class="text-white leading-relaxed bg-white/10 p-4 rounded-lg">${expertiseRequest.question}</p>
     </div>
 
-    <form action="respondExpertiseRequest" method="post" class="bg-white rounded-lg shadow-md p-6">
+    <form action="respond" method="post" class="bg-white rounded-lg shadow-md p-6">
         <input type="hidden" name="requestId" value="${expertiseRequest.id}">
 
         <div class="flex items-center mb-6">
@@ -206,5 +206,17 @@
         </div>
     </form>
 </div>
+<script>
+    setTimeout(function() {
+        const messages = document.querySelectorAll('.bg-green-50, .bg-red-50');
+        messages.forEach(function(message) {
+            message.style.transition = 'opacity 0.5s';
+            message.style.opacity = '0';
+            setTimeout(function() {
+                message.remove();
+            }, 500);
+        });
+    }, 5000);
+</script>
 </body>
 </html>

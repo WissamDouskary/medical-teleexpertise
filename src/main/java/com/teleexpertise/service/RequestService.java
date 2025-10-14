@@ -40,6 +40,10 @@ public class RequestService {
         return requestDAO.save(expertiseRequest);
     }
 
+    public static boolean respondRequest(Long id, StatutExpertise statutExpertise, String recommendation, String avisSpecialiste){
+        return requestDAO.update(id, statutExpertise, avisSpecialiste, recommendation);
+    }
+
     public static List<ExpertiseRequest> findAllRequests(MedecinSpecialiste specialiste){
         return requestDAO.findAll(specialiste);
     }
