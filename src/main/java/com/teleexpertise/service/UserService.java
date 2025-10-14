@@ -1,6 +1,7 @@
 package com.teleexpertise.service;
 
 import com.teleexpertise.dao.UserDAO;
+import com.teleexpertise.model.MedecinGeneraliste;
 import com.teleexpertise.model.MedecinSpecialiste;
 
 import java.util.List;
@@ -14,5 +15,9 @@ public class UserService {
 
     public static MedecinSpecialiste findSpecialisteById(Long id){
         return userDAO.findSpecialisteById(id);
+    }
+
+    public static boolean updateUser(double tarif, String specialite, Long speId){
+        return userDAO.update(tarif, specialite, speId);
     }
 }

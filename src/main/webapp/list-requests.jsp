@@ -29,8 +29,11 @@
                     </div>
                     <span class="text-xl font-bold text-gray-900">MediExpert</span>
                 </a>
-                <a href="specialistRequests" class="text-[#4A1D4A] font-medium hover:text-[#6B2D6B] transition-colors">
+                <a href="requests" class="text-[#4A1D4A] font-medium hover:text-[#6B2D6B] transition-colors">
                     Mes Demandes
+                </a>
+                <a href="profile" class="text-[#4A1D4A] font-medium hover:text-[#6B2D6B] transition-colors">
+                    Edit Profile
                 </a>
             </div>
             <div class="flex items-center gap-4">
@@ -113,7 +116,6 @@
             <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition">
                 <div class="flex items-start justify-between mb-4">
                     <div class="flex items-center gap-3">
-                        Priority Badge
                         <c:choose>
                             <c:when test="${request.priorite == 'URGENTE'}">
                                 <span class="px-3 py-1 bg-red-100 text-red-700 text-xs font-semibold rounded-full flex items-center gap-1">

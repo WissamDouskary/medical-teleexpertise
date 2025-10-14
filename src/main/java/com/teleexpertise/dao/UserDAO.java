@@ -47,4 +47,18 @@ public class UserDAO {
             return null;
         }
     }
+
+    public boolean update(double tarif, String specialite, Long speId){
+        try(Session session = Dbconnection.getSessionFactory().openSession()){
+            Transaction tx = session.beginTransaction();
+            MedecinSpecialiste ms = session.find(MedecinSpecialiste.class, speId);
+            ms.setSpecialite(specialite);
+            ms.setTarif(tarif);
+            tx.commit();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }
