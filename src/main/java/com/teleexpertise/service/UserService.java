@@ -4,7 +4,9 @@ import com.teleexpertise.dao.UserDAO;
 import com.teleexpertise.model.MedecinGeneraliste;
 import com.teleexpertise.model.MedecinSpecialiste;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class UserService {
     private static UserDAO userDAO = new UserDAO();
@@ -19,5 +21,13 @@ public class UserService {
 
     public static boolean updateUser(double tarif, String specialite, Long speId){
         return userDAO.update(tarif, specialite, speId);
+    }
+
+    public static List<MedecinSpecialiste> findBySpecialiteSorted(String specialite) {
+        return findAllMedecinSpecialiste().stream()
+                .filter(s -> s.getSpecialite() != null &&
+                        s.getSpecialite().equalsIgnoreCase(specialite))
+                .sorted(Comparator.comparingDouble(MedecinSpecialiste::getTarif))
+                .collect(Collectors.toList());
     }
 }

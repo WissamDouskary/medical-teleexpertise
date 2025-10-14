@@ -109,7 +109,7 @@
             </select>
         </div>
 
-        <!-- Specialist Selection -->
+        <!-- Spécialistes filtrés -->
         <div class="mb-6">
             <label for="specialisteId" class="block text-sm font-medium text-gray-700 mb-2">
                 Médecin Spécialiste <span class="text-red-500">*</span>
@@ -119,11 +119,10 @@
                 <option value="">Sélectionner un spécialiste</option>
                 <c:forEach items="${specialistes}" var="specialiste">
                     <option value="${specialiste.id}">
-                        Dr. ${specialiste.nom} ${specialiste.prenom} - ${specialiste.specialite}
+                        Dr. ${specialiste.nom} ${specialiste.prenom} - ${specialiste.specialite} (${specialiste.tarif} MAD)
                     </option>
                 </c:forEach>
             </select>
-            <p class="text-xs text-gray-500 mt-1">Choisissez le spécialiste approprié selon le cas médical</p>
         </div>
 
         <!-- Question -->
@@ -153,5 +152,21 @@
         </div>
     </form>
 </div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const select = document.getElementById("specialite");
+        select.addEventListener("change", function() {
+            const value = this.value;
+            if (!value) return;
+            const consultationId = "${consultation.id != null ? consultation.id : ''}";
+            if (!consultationId) {
+                alert("Consultation ID is missing!");
+                return;
+            }
+            window.location.href = `selectSpecialite?specialite=${encodeURIComponent(value)}&consultationId=${consultationId}`;
+        });
+    });
+</script>
 </body>
 </html>
