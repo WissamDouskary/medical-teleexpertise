@@ -43,4 +43,8 @@ public class RequestService {
     public static List<ExpertiseRequest> findAllRequests(MedecinSpecialiste specialiste){
         return requestDAO.findAll(specialiste);
     }
+
+    public static ExpertiseRequest findByIdAndSpecialiste(Long id, MedecinSpecialiste specialiste){
+        return requestDAO.findByIdAndSpecialiste(id, specialiste);
+    }
 }

@@ -22,12 +22,4 @@ public class UserService {
     public static boolean updateUser(double tarif, String specialite, Long speId){
         return userDAO.update(tarif, specialite, speId);
     }
-
-    public static List<MedecinSpecialiste> findBySpecialiteSorted(String specialite) {
-        return findAllMedecinSpecialiste().stream()
-                .filter(s -> s.getSpecialite() != null &&
-                        s.getSpecialite().equalsIgnoreCase(specialite))
-                .sorted(Comparator.comparingDouble(MedecinSpecialiste::getTarif))
-                .collect(Collectors.toList());
-    }
 }
