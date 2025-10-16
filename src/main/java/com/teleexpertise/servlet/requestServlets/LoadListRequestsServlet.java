@@ -26,9 +26,9 @@ public class LoadListRequestsServlet extends HttpServlet {
         String statut = req.getParameter("status") == null ? "Tous" : req.getParameter("status");
 
         List<ExpertiseRequest> requests = RequestService.findAllRequests(ms);
-        double enAttentSize = requests.stream().filter(r -> r.getStatut().equals(StatutExpertise.EN_ATTENTE)).count();
-        double urgentSize = requests.stream().filter(r -> r.getPriorite().equals(PrioriteExpertise.URGENTE)).count();
-        double CompletedSize = requests.stream().filter(r -> r.getStatut().equals(StatutExpertise.TERMINEE)).count();
+        int enAttentSize = (int) requests.stream().filter(r -> r.getStatut().equals(StatutExpertise.EN_ATTENTE)).count();
+        int urgentSize = (int) requests.stream().filter(r -> r.getPriorite().equals(PrioriteExpertise.URGENTE)).count();
+        int CompletedSize = (int) requests.stream().filter(r -> r.getStatut().equals(StatutExpertise.TERMINEE)).count();
 
         StatutExpertise statutExpertise;
 
