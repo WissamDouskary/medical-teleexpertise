@@ -131,6 +131,21 @@
         </div>
     </div>
 
+    <form method="get" action="requests" class="flex items-center gap-4">
+        <label for="status" class="text-sm font-medium text-gray-700">Filtrer :</label>
+        <select id="status" name="status"
+                class="border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-700">
+            <option value="Tous" ${selectedStatus == 'Tous' ? 'selected' : ''}>Tous</option>
+            <option value="EN_ATTENTE" ${selectedStatus == 'EN_ATTENTE' ? 'selected' : ''}>En Course</option>
+            <option value="TERMINEE" ${selectedStatus == 'TERMINEE' ? 'selected' : ''}>Terminée</option>
+        </select>
+
+        <button type="submit"
+                class="bg-[#4A1D4A] hover:bg-[#6B2D6B] text-white px-4 py-2 rounded-lg text-sm transition-colors">
+            Filtrer
+        </button>
+    </form>
+
     <div class="space-y-4">
         <c:forEach items="${expertiseRequests}" var="request">
             <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition">

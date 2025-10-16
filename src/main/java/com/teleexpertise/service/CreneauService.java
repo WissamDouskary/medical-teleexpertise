@@ -18,18 +18,6 @@ public class CreneauService {
         return creneauDAO.findBySpecialiste(specialiste);
     }
 
-    public static void markUnavailable(Creneau creneau){
-        creneauDAO.markAsUnavailable(creneau);
-    }
-
-    public static List<Creneau> findAvailableBySpecialiste(MedecinSpecialiste specialiste){
-        return creneauDAO.findAvailableBySpecialiste(specialiste);
-    }
-
-    public static Creneau findByDateAndSpecialiste(LocalDateTime date, MedecinSpecialiste specialiste) {
-        return creneauDAO.findByDateAndSpecialiste(date, specialiste);
-    }
-
     public static void save(Creneau creneau) {
         creneauDAO.save(creneau);
     }

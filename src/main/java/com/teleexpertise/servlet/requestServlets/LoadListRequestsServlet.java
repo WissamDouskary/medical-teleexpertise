@@ -23,17 +23,28 @@ public class LoadListRequestsServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
         MedecinSpecialiste ms = (MedecinSpecialiste) session.getAttribute("user");
+        String statut = req.getParameter("status") == null ? "Tous" : req.getParameter("status");
 
         List<ExpertiseRequest> requests = RequestService.findAllRequests(ms);
         double enAttentSize = requests.stream().filter(r -> r.getStatut().equals(StatutExpertise.EN_ATTENTE)).count();
         double urgentSize = requests.stream().filter(r -> r.getPriorite().equals(PrioriteExpertise.URGENTE)).count();
         double CompletedSize = requests.stream().filter(r -> r.getStatut().equals(StatutExpertise.TERMINEE)).count();
 
-        for (ExpertiseRequest r : requests) {
-            System.out.println("Patient: " + r.getConsultation().getPatient().getNom());
-            System.out.println("Medecin: " + r.getConsultation().getMedecinGeneraliste());
+        StatutExpertise statutExpertise;
+
+        if (statut.equals("EN_ATTENTE")) {
+            statutExpertise = StatutExpertise.EN_ATTENTE;
+        } else if (statut.equals("TERMINEE")) {
+            statutExpertise = StatutExpertise.TERMINEE;
+        } else {
+            statutExpertise = null;
         }
 
+        if (!statut.equals("Tous") && statutExpertise != null) {
+            requests = requests.stream().filter(a -> a.getStatut().equals(statutExpertise)).toList();
+        }
+
+        req.setAttribute("selectedStatus", statut != null ? statut : "Tous");
         req.setAttribute("totalRequests", requests.size());
         req.setAttribute("pendingRequests", enAttentSize);
         req.setAttribute("urgentRequests", urgentSize);
