@@ -27,6 +27,18 @@ public class ExpertiseRequest {
     @JoinColumn(name = "specialiste_id")
     private MedecinSpecialiste specialiste;
 
+    @ManyToOne
+    @JoinColumn(name = "creneau_id")
+    private Creneau creneau;
+
+    public Creneau getCreneau() {
+        return creneau;
+    }
+
+    public void setCreneau(Creneau creneau) {
+        this.creneau = creneau;
+    }
+
     public String getQuestion() {
         return question;
     }

@@ -3,41 +3,62 @@ package com.teleexpertise.service;
 import com.teleexpertise.dao.RequestDAO;
 import com.teleexpertise.enums.PrioriteExpertise;
 import com.teleexpertise.enums.StatutExpertise;
-import com.teleexpertise.model.Consultation;
-import com.teleexpertise.model.ExpertiseRequest;
-import com.teleexpertise.model.MedecinGeneraliste;
-import com.teleexpertise.model.MedecinSpecialiste;
+import com.teleexpertise.model.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class RequestService {
     private static RequestDAO requestDAO = new RequestDAO();
 
-    public static boolean sendRequest(Long ConsultationId, String priorite, Long specialisteId, String question){
-        Consultation consultation = ConsultationService.findById(ConsultationId);
+    public static boolean sendRequest(Long consultationId, String priorite, Long specialisteId, String question, String creneauDateStr) {
+        Consultation consultation = ConsultationService.findById(consultationId);
         MedecinSpecialiste specialiste = UserService.findSpecialisteById(specialisteId);
 
-        PrioriteExpertise prioriteExpertise = null;
-        if(priorite.equals("URGENTE")){
-            prioriteExpertise = PrioriteExpertise.URGENTE;
-        }else if(priorite.equals("NORMALE")){
-            prioriteExpertise = PrioriteExpertise.NORMALE;
-        }else if(priorite.equals("NON_URGENTE")){
-            prioriteExpertise = PrioriteExpertise.NON_URGENTE;
-        }
-
-        if(prioriteExpertise == null){
+        if (consultation == null || specialiste == null || creneauDateStr == null || creneauDateStr.isEmpty()) {
             return false;
         }
 
-        ExpertiseRequest expertiseRequest = new ExpertiseRequest();
-        expertiseRequest.setConsultation(consultation);
-        expertiseRequest.setSpecialiste(specialiste);
-        expertiseRequest.setPriorite(prioriteExpertise);
-        expertiseRequest.setQuestion(question);
-        expertiseRequest.setStatut(StatutExpertise.EN_ATTENTE);
+        LocalDateTime creneauDate = LocalDateTime.parse(creneauDateStr);
 
-        return requestDAO.save(expertiseRequest);
+        LocalDateTime creneauFin = creneauDate.plusMinutes(30);
+
+        List<Creneau> existingCreneaux = CreneauService.findBySpecialiste(specialiste);
+
+        for (Creneau existing : existingCreneaux) {
+            LocalDateTime debut = existing.getDebut();
+            LocalDateTime fin = existing.getFin();
+
+
+            if (creneauDate.isBefore(fin) && creneauFin.isAfter(debut)) {
+                return false;
+            }
+        }
+
+        Creneau creneau = new Creneau();
+        creneau.setDebut(creneauDate);
+        creneau.setFin(creneauFin);
+        creneau.setDisponible(false);
+        creneau.setSpecialiste(specialiste);
+        CreneauService.save(creneau);
+
+        PrioriteExpertise prioriteExpertise = switch (priorite) {
+            case "URGENTE" -> PrioriteExpertise.URGENTE;
+            case "NORMALE" -> PrioriteExpertise.NORMALE;
+            case "NON_URGENTE" -> PrioriteExpertise.NON_URGENTE;
+            default -> null;
+        };
+        if (prioriteExpertise == null) return false;
+
+        ExpertiseRequest request = new ExpertiseRequest();
+        request.setConsultation(consultation);
+        request.setSpecialiste(specialiste);
+        request.setPriorite(prioriteExpertise);
+        request.setQuestion(question);
+        request.setCreneau(creneau);
+        request.setStatut(StatutExpertise.EN_ATTENTE);
+
+        return requestDAO.save(request);
     }
 
     public static boolean respondRequest(Long id, StatutExpertise statutExpertise, String recommendation, String avisSpecialiste){
