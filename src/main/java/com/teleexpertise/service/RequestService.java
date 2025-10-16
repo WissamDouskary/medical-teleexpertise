@@ -61,6 +61,10 @@ public class RequestService {
         return requestDAO.save(request);
     }
 
+    public static ExpertiseRequest findRequestById(Long id){
+        return requestDAO.findById(id);
+    }
+
     public static boolean respondRequest(Long id, StatutExpertise statutExpertise, String recommendation, String avisSpecialiste){
         return requestDAO.update(id, statutExpertise, avisSpecialiste, recommendation);
     }

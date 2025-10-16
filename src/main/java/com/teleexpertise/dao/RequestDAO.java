@@ -60,6 +60,17 @@ public class RequestDAO {
         }
     }
 
+    public ExpertiseRequest findById(Long id){
+        try(Session session = Dbconnection.getSessionFactory().openSession()){
+            Query<ExpertiseRequest> query = session.createQuery("SELECT r FROM ExpertiseRequest r LEFT JOIN FETCH r.consultation c LEFT JOIN FETCH c.patient LEFT JOIN FETCH c.medecinGeneraliste LEFT JOIN FETCH r.specialiste LEFT JOIN FETCH c.acteMedicals WHERE r.id = :id", ExpertiseRequest.class);
+            query.setParameter("id", id);
+            return query.uniqueResult();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     public ExpertiseRequest findByIdAndSpecialiste(Long id, MedecinSpecialiste specialiste){
         try(Session session = Dbconnection.getSessionFactory().openSession()){
             Query<ExpertiseRequest> query = session.createQuery("SELECT r FROM ExpertiseRequest r LEFT JOIN FETCH r.consultation c LEFT JOIN FETCH c.patient LEFT JOIN FETCH c.medecinGeneraliste LEFT JOIN FETCH r.specialiste WHERE r.specialiste = :specialiste AND r.id = :id", ExpertiseRequest.class);
