@@ -32,7 +32,7 @@ public class CreateRequestServlet extends HttpServlet {
             session.setAttribute("success", "request envoyé avec succes!");
             resp.sendRedirect("createRequest?consultationId="+consultationId);
         } else {
-            session.setAttribute("error", "Le Creneau tu choisi est ne pas disponible essayer une autre date que : "+creneauDateStr );
+            session.setAttribute("error", "Le Creneau tu choisi est ne pas disponible ou ce consultation est deja envoyer a specialiste!" );
             resp.sendRedirect("createRequest?consultationId="+consultationId);
         }
     }

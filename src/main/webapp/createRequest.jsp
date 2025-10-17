@@ -13,6 +13,8 @@
             font-family: 'Inter', sans-serif;
         }
     </style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 </head>
 <body class="bg-gray-50">
 <!-- Navigation -->
@@ -46,7 +48,8 @@
 <div class="max-w-4xl mx-auto px-4 py-8">
     <!-- Header -->
     <div class="mb-6">
-        <a href="viewPatient?id=${consultation.patient.id}" class="inline-flex items-center text-[#4A1D4A] hover:text-[#6B2D6B] transition mb-4">
+        <a href="viewPatient?id=${consultation.patient.id}"
+           class="inline-flex items-center text-[#4A1D4A] hover:text-[#6B2D6B] transition mb-4">
             <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
             </svg>
@@ -59,7 +62,9 @@
     <c:if test="${not empty success}">
         <div class="mb-6 bg-green-50 border border-green-200 text-green-800 px-4 py-3 rounded-lg flex items-center">
             <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                <path fill-rule="evenodd"
+                      d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                      clip-rule="evenodd"/>
             </svg>
                 ${success}
         </div>
@@ -69,7 +74,9 @@
     <c:if test="${not empty error}">
         <div class="mb-6 bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded-lg flex items-center">
             <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>
+                <path fill-rule="evenodd"
+                      d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                      clip-rule="evenodd"/>
             </svg>
                 ${error}
         </div>
@@ -80,7 +87,8 @@
     <div class="bg-white rounded-lg shadow-md p-6 mb-6">
         <div class="flex items-center mb-4">
             <svg class="w-6 h-6 text-[#4A1D4A] mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
             </svg>
             <h2 class="text-xl font-semibold text-gray-900">Informations de la Consultation</h2>
         </div>
@@ -110,7 +118,8 @@
 
         <div class="flex items-center mb-6">
             <svg class="w-6 h-6 text-[#4A1D4A] mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
             </svg>
             <h2 class="text-xl font-semibold text-gray-900">Détails de la Demande</h2>
         </div>
@@ -139,7 +148,8 @@
                 <option value="">Sélectionner un spécialiste</option>
                 <c:forEach items="${specialistes}" var="specialiste">
                     <option value="${specialiste.id}">
-                        Dr. ${specialiste.nom} ${specialiste.prenom} - ${specialiste.specialite} (${specialiste.tarif} MAD)
+                        Dr. ${specialiste.nom} ${specialiste.prenom} - ${specialiste.specialite} (${specialiste.tarif}
+                        MAD)
                     </option>
                 </c:forEach>
             </select>
@@ -150,7 +160,7 @@
                 Choisir un créneau <span class="text-red-500">*</span>
             </label>
             <input
-                    type="datetime-local"
+                    type="text"
                     id="creneauDate"
                     name="creneauDate"
                     required
@@ -178,7 +188,8 @@
             <button type="submit"
                     class="px-6 py-2 bg-[#4A1D4A] text-white rounded-lg hover:bg-[#6B2D6B] transition flex items-center">
                 <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/>
                 </svg>
                 Envoyer la Demande
             </button>
@@ -186,12 +197,92 @@
     </form>
 </div>
 <script>
-    setTimeout(function() {
+    const specialisteSelect = document.getElementById("specialisteId");
+    let unavailableSlots = [];
+    let calendarInstance = null;
+
+    let alertShown = false;
+
+    function initCalendar() {
+        if (calendarInstance) {
+            calendarInstance.destroy();
+        }
+
+        calendarInstance = flatpickr("#creneauDate", {
+            enableTime: true,
+            dateFormat: "Y-m-d\\TH:i",
+            time_24hr: true,
+            minDate: "today",
+            minTime: "08:00",
+            maxTime: "12:00",
+            disable: unavailableSlots.map(slot => ({
+                from: slot.debut,
+                to: slot.fin
+            })),
+            onChange: function (selectedDates, dateStr, instance) {
+                if (!selectedDates[0]) return;
+
+                const selected = selectedDates[0];
+                const hours = selected.getHours();
+
+                if ((hours < 8 || hours >= 12) && !alertShown) {
+                    alertShown = true;
+                    alert("Les créneaux sont disponibles uniquement entre 08h00 et 12h00.");
+                    setTimeout(() => {
+                        instance.clear();
+                        alertShown = false;
+                    }, 50);
+                    return;
+                }
+
+                const selectedISO = selected.toISOString().slice(0, 16);
+                const conflict = unavailableSlots.some(slot => {
+                    const start = new Date(slot.debut).toISOString().slice(0, 16);
+                    const end = new Date(slot.fin).toISOString().slice(0, 16);
+                    return selectedISO >= start && selectedISO < end;
+                });
+
+                if (conflict && !alertShown) {
+                    alertShown = true;
+                    alert("Ce créneau n'est pas disponible pour ce spécialiste.");
+                    setTimeout(() => {
+                        instance.clear();
+                        alertShown = false;
+                    }, 50);
+                }
+            }
+        });
+    }
+
+    specialisteSelect.addEventListener("change", async () => {
+        const id = specialisteSelect.value;
+        unavailableSlots = [];
+
+        if (!id) {
+            initCalendar();
+            return;
+        }
+
+        try {
+            const response = await fetch("/medical_teleexpertise/getUnavailableCreneaux?specialisteId=" + id);
+            if (!response.ok) throw new Error("Erreur serveur");
+
+            unavailableSlots = await response.json();
+            initCalendar();
+        } catch (err) {
+            console.error("Erreur lors du chargement des créneaux:", err);
+            initCalendar();
+        }
+    });
+
+    document.addEventListener("DOMContentLoaded", initCalendar);
+
+    setTimeout(function () {
         const messages = document.querySelectorAll('.bg-green-50, .bg-red-50');
-        messages.forEach(function(message) {
+        messages.forEach(function (message) {
             message.style.transition = 'opacity 0.5s';
             message.style.opacity = '0';
-            setTimeout(function() {
+            setTimeout(function () {
                 message.remove();
             }, 500);
         });

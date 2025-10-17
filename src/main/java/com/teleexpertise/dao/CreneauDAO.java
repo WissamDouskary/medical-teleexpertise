@@ -33,11 +33,29 @@ public class CreneauDAO {
         }
     }
 
-    public void save(Creneau creneau) {
+    public boolean save(Creneau creneau) {
         try (Session session = Dbconnection.getSessionFactory().openSession()) {
             Transaction tx = session.beginTransaction();
             session.persist(creneau);
             tx.commit();
+            return true;
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean delete(Creneau creneau) {
+        try (Session session = Dbconnection.getSessionFactory().openSession()) {
+            Transaction tx = session.beginTransaction();
+            session.remove(creneau);
+            tx.commit();
+            return true;
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            return false;
         }
     }
 

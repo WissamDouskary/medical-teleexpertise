@@ -2,6 +2,7 @@ package com.teleexpertise.dao;
 
 import com.teleexpertise.config.Dbconnection;
 import com.teleexpertise.enums.StatutExpertise;
+import com.teleexpertise.model.Creneau;
 import com.teleexpertise.model.ExpertiseRequest;
 import com.teleexpertise.model.MedecinSpecialiste;
 import org.hibernate.Session;
@@ -80,6 +81,15 @@ public class RequestDAO {
         } catch (Exception e) {
             e.printStackTrace();
             return null;
+        }
+    }
+
+    public List<Creneau> findUnavailableCreneauxBySpecialiste(Long specialisteId) {
+        try (Session session = Dbconnection.getSessionFactory().openSession()) {
+            Query<Creneau> query = session.createQuery(
+                    "SELECT c FROM Creneau c WHERE c.specialiste.id = :id", Creneau.class);
+            query.setParameter("id", specialisteId);
+            return query.getResultList();
         }
     }
 }

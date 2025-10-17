@@ -18,7 +18,11 @@ public class CreneauService {
         return creneauDAO.findBySpecialiste(specialiste);
     }
 
-    public static void save(Creneau creneau) {
-        creneauDAO.save(creneau);
+    public static boolean save(Creneau creneau) {
+        return creneauDAO.save(creneau);
+    }
+
+    public static boolean delete(Creneau creneau){
+        return creneauDAO.delete(creneau);
     }
 }
