@@ -82,9 +82,8 @@ MediExpert/
 | **SigneVital** | Mesures vitales d'un patient | `N-1` avec Patient |
 
 ### Schéma des relations
-```
+
 ![img.png](img.png)
-```
 
 ---
 
