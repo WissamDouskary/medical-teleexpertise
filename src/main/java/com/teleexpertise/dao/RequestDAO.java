@@ -1,7 +1,9 @@
 package com.teleexpertise.dao;
 
 import com.teleexpertise.config.Dbconnection;
+import com.teleexpertise.enums.StatutConsultation;
 import com.teleexpertise.enums.StatutExpertise;
+import com.teleexpertise.model.Consultation;
 import com.teleexpertise.model.Creneau;
 import com.teleexpertise.model.ExpertiseRequest;
 import com.teleexpertise.model.MedecinSpecialiste;
@@ -18,6 +20,24 @@ public class RequestDAO {
             session.persist(expertiseRequest);
             tx.commit();
             return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean IsAlreadySend(Consultation consultation) {
+        try (Session session = Dbconnection.getSessionFactory().openSession()) {
+            Query<ExpertiseRequest> requestQuery = session.createQuery(
+                    "SELECT e FROM ExpertiseRequest e " +
+                            "WHERE e.consultation = :consultation " +
+                            "AND e.consultation.statut = :statut",
+                    ExpertiseRequest.class
+            );
+            requestQuery.setParameter("consultation", consultation);
+            requestQuery.setParameter("statut", StatutConsultation.EN_ATTENTE_AVIS_SPECIALISTE);
+
+            return !requestQuery.list().isEmpty();
         } catch (Exception e) {
             e.printStackTrace();
             return false;

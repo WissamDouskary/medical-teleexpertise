@@ -21,6 +21,7 @@ public class CreateRequestServlet extends HttpServlet {
         String creneauDateStr = req.getParameter("creneauDate");
         String question = req.getParameter("question");
         String priorite = req.getParameter("priorite");
+        Long patientId = Long.parseLong(req.getParameter("patientId"));
 
         boolean success = RequestService.sendRequest(
                 consultationId, priorite ,  specialisteId, question , creneauDateStr
@@ -30,10 +31,10 @@ public class CreateRequestServlet extends HttpServlet {
 
         if (success) {
             session.setAttribute("success", "request envoyé avec succes!");
-            resp.sendRedirect("createRequest?consultationId="+consultationId);
+            resp.sendRedirect("viewPatient?id="+patientId);
         } else {
             session.setAttribute("error", "Le Creneau tu choisi est ne pas disponible ou ce consultation est deja envoyer a specialiste!" );
-            resp.sendRedirect("createRequest?consultationId="+consultationId);
+            resp.sendRedirect("viewPatient?id="+patientId);
         }
     }
 }

@@ -83,6 +83,10 @@ public class RequestService {
         return requestDAO.findUnavailableCreneauxBySpecialiste(specialisteId);
     }
 
+    public static boolean isAlreadySendRequest(Consultation consultation){
+        return requestDAO.IsAlreadySend(consultation);
+    }
+
     public static ExpertiseRequest findRequestById(Long id){
         return requestDAO.findById(id);
     }

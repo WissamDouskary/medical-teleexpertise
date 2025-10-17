@@ -5,6 +5,7 @@ import com.teleexpertise.model.Creneau;
 import com.teleexpertise.model.MedecinSpecialiste;
 import com.teleexpertise.service.ConsultationService;
 import com.teleexpertise.service.CreneauService;
+import com.teleexpertise.service.RequestService;
 import com.teleexpertise.service.UserService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -26,12 +27,21 @@ public class LoadCreateRequestPageServlet extends HttpServlet {
             Consultation consultation = ConsultationService.findById(id);
             List<MedecinSpecialiste> specialistes = UserService.findAllMedecinSpecialiste();
 
+            boolean alreadySent = RequestService.isAlreadySendRequest(consultation);
+
+            if (alreadySent) {
+                req.getSession().setAttribute("error",
+                        "Une demande d'expertise a déjà été envoyée pour cette consultation.");
+                resp.sendRedirect("viewPatient?id="+consultation.getPatient().getId());
+                return;
+            }
+
             req.setAttribute("consultation", consultation);
             req.setAttribute("specialistes", specialistes);
 
             req.getRequestDispatcher("createRequest.jsp").forward(req, resp);
         } else {
-            resp.sendRedirect("consultations");
+            resp.sendRedirect("patients");
         }
     }
 }

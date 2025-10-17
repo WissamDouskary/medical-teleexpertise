@@ -115,6 +115,7 @@
     <!-- Expertise Request Form -->
     <form action="createExpertiseRequest" method="post" class="bg-white rounded-lg shadow-md p-6">
         <input type="hidden" name="consultationId" value="${consultation.id}">
+        <input type="hidden" name="patientId" value="${consultation.patient.id}">
 
         <div class="flex items-center mb-6">
             <svg class="w-6 h-6 text-[#4A1D4A] mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
